@@ -1,21 +1,14 @@
 #pragma once
 
-#include "foo.h"
-
-template <typename T>
-class decorator : public T
+template <typename T, typename D>
+std::function<T> decorate_function(std::function<T> inner, std::function<D> decorator)
 {
-public:
-  decorator(T &f)
-    : f(f)
-  {}
-  virtual void do_work() override
-  {
-    // Do something else here to decorate
-    // the do_work function
-    f.do_work();
-  }
+  std::function<T> pre = [&]() {
+    if (decorator)
+      decorator();
+    if (inner)
+      inner();
+  };
 
-private:
-  T &f;
-};
+  return pre;
+}

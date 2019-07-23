@@ -1,7 +1,11 @@
 #include <iostream>
 
+#include "decorator.h"
+
 int main(void)
 {
-	return 0;
+  foo_concrete  f;
+  foo_decorator decorated_f{f};
+  bar(decorated_f);
+  return 0;
 }
-

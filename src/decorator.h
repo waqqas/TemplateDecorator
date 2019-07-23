@@ -1,31 +1,21 @@
 #pragma once
-class foo
+
+#include "foo.h"
+
+template <typename T>
+class decorator : public T
 {
-  public:
-    virtual void do_work() = 0;
+public:
+  decorator(T &f)
+    : f(f)
+  {}
+  virtual void do_work() override
+  {
+    // Do something else here to decorate
+    // the do_work function
+    f.do_work();
+  }
+
+private:
+  T &f;
 };
-class foo_concrete : public foo
-{
-  public:
-    virtual void do_work() override
-    { }
-};
-class foo_decorator : public foo
-{
-  public:
-    foo_decorator(foo& f)
-      : f(f)
-    { }
-    virtual void do_work() override
-    {
-      // Do something else here to decorate
-      // the do_work function
-      f.do_work();
-    }
-  private:
-    foo& f;
-};
-void bar(foo& f)
-{
-  f.do_work();
-}

@@ -2,10 +2,15 @@
 
 #include "decorator.h"
 
+void bar(foo &f)
+{
+  f.do_work();
+}
+
 int main(void)
 {
   foo_concrete  f;
-  foo_decorator decorated_f{f};
-  bar(decorated_f);
+  decorator<foo_concrete> df{f};
+  bar(df);
   return 0;
 }

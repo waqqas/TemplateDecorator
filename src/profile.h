@@ -28,5 +28,15 @@ public:
   {
     return (_end - _start);
   }
+
+  template <typename T>
+  std::function<T> profile_it(std::function<T> inner)
+  {
+    return [&]() {
+      start();
+      inner();
+      end();
+    };
+  }
 };
 }  // namespace profiler

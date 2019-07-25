@@ -15,10 +15,18 @@ int main(void)
   std::function<void(void)> start = [&p]() { p.start(); };
   std::function<void(void)> end   = [&p]() { p.end(); };
 
-  auto decorated_do_work = decorate_function(do_work, start, end);
-  decorated_do_work();
+  {
+    auto decorated_do_work = decorate_function(do_work, start, end);
+    decorated_do_work();
 
-  std::cout << "diff " << p.diff().count() << std::endl;
+    std::cout << "diff " << p.diff().count() << std::endl;
+  }
+
+  {
+    auto decorated_do_work = p.profile_it(do_work);
+    decorated_do_work();
+    std::cout << "diff " << p.diff().count() << std::endl;
+  }
 
   return 0;
 }
